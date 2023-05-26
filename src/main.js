@@ -1,3 +1,3 @@
-const apiKey = process.env.API_KEY;
+const apiKey = API_KEY;
 
 console.log(apiKey);
