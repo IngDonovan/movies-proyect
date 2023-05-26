@@ -1,9 +1,11 @@
 const api_key = API_KEY;
 const urlTrending = 'https://api.themoviedb.org/3/trending/movie/day';
+const idiom = 'es'
+const urlenguage = `&language=${idiom}`;
 
 async function getTrendingMoviesPreview() {
     try {
-        const res = await fetch(urlTrending + api_key);
+        const res = await fetch(urlTrending + api_key + urlenguage);
         const data = await res.json();
 
         const movies = data.results;
