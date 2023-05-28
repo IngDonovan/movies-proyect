@@ -1,4 +1,4 @@
-const locHash = location.hash;
+// const locHash = location.hash;
 
 arrowBtn.addEventListener('click', () => location.hash = 'home');
 searchFormBtn.addEventListener('click', () => location.hash = 'search=');
@@ -9,6 +9,7 @@ window.addEventListener('hashchange', navigator, true)
 
 function navigator() {
     console.log({ location });
+    const locHash = location.hash;
 
     locHash.startsWith('#trends')? trendsPage():
     locHash.startsWith('#search=')? searchPage():
@@ -16,17 +17,6 @@ function navigator() {
     locHash.startsWith('#category=')? categoriesPage():
     homePage()
 
-    // if (locHash.startsWith('#trends')) {
-    //     trendsPage();
-    // }else if (locHash.startsWith('#search=')) {
-    //     searchPage();
-    // } else if (locHash.startsWith('#movie=')) {
-    //     moviePage();
-    // } else if (locHash.startsWith('#category=')) {
-    //     categoriesPage();
-    // } else {
-    //     homePage();
-    // }
 
 }
 
