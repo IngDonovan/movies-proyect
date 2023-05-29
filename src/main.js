@@ -4,7 +4,8 @@ const trending = 'trending/movie/day';
 const idiom = 'es-ES'
 const urlenguage = `&language=${idiom}`;
 const urlCategories = 'genre/movie/list';
-const urlMoviesCat = 'discover/movie'
+const urlMoviesCat = 'discover/movie';
+const urlSearch = 'search/movie';
 
 
 const api = axios.create({
@@ -30,7 +31,29 @@ function createMovies(movies, container) {
       </div>
     `)
 });
-}
+};
+function createCategories(categories, container) {
+  container.innerHTML = '';
+      
+  categories.forEach(category => {
+    const categoryId = category.id;
+    const categoryName = category.name;
+    
+    const hash = `#category=${categoryId}-${categoryName}`;
+
+    container.insertAdjacentHTML('beforeend', `
+      <div class="category-container">
+        <h3 id="id${categoryId}" class="category-title">${categoryName}</h3>
+      </div>
+    `);
+
+    const categoryTitle = document.querySelector(`#id${categoryId}`);
+    categoryTitle.addEventListener('click', () => {
+      location.hash = hash;
+    });
+  });
+};
+
 
 async function getTrendingMoviesPreview() {
   try {
@@ -62,25 +85,28 @@ async function getCategoriesPreview() {
 
       const categories = data.genres;
       // console.log({data, categories});
-      categoriesPreviewList.innerHTML = '';
+
+      createCategories(categories, categoriesPreviewList);
+
+      // categoriesPreviewList.innerHTML = '';
       
-      categories.forEach(category => {
-        const categoryId = category.id;
-        const categoryName = category.name;
+      // categories.forEach(category => {
+      //   const categoryId = category.id;
+      //   const categoryName = category.name;
         
-        const hash = `#category=${categoryId}-${categoryName}`;
+      //   const hash = `#category=${categoryId}-${categoryName}`;
   
-        categoriesPreviewList.insertAdjacentHTML('beforeend', `
-          <div class="category-container">
-            <h3 id="id${categoryId}" class="category-title">${categoryName}</h3>
-          </div>
-        `);
+      //   categoriesPreviewList.insertAdjacentHTML('beforeend', `
+      //     <div class="category-container">
+      //       <h3 id="id${categoryId}" class="category-title">${categoryName}</h3>
+      //     </div>
+      //   `);
   
-        const categoryTitle = document.querySelector(`#id${categoryId}`);
-        categoryTitle.addEventListener('click', () => {
-          location.hash = hash;
-        });
-      });
+      //   const categoryTitle = document.querySelector(`#id${categoryId}`);
+      //   categoryTitle.addEventListener('click', () => {
+      //     location.hash = hash;
+      //   });
+      // });
         
   } catch (error) {
       console.log('Ocurrió un error: ', error);
@@ -107,6 +133,22 @@ async function getMoviesByCategory(id) {
       //     `)
       // });
       
+
+  } catch (error) {
+      console.log('Ocurrió un error: ', error);
+  }
+}
+
+async function getMoviesBySearch(query) {
+  try {
+      const {data} = await api(urlSearch, {
+        params:{
+          query, //como el parámetro es igual se puede poner solo uno
+        },
+      });
+      const movies = data.results;
+
+      createMovies(movies, genericSection);      
 
   } catch (error) {
       console.log('Ocurrió un error: ', error);

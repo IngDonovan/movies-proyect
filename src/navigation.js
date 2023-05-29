@@ -1,8 +1,11 @@
 // const locHash = location.hash;
 
-arrowBtn.addEventListener('click', () => location.hash = 'home');
-searchFormBtn.addEventListener('click', () => location.hash = 'search=');
+arrowBtn.addEventListener('click', () => window.history.back());
 trendingBtn.addEventListener('click', () => location.hash = 'trends');
+
+searchFormBtn.addEventListener('click', () => {
+    location.hash = `search=${searchFormInput.value}`
+});
 
 window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, true)
@@ -17,7 +20,10 @@ function navigator() {
     locHash.startsWith('#category=')? categoriesPage():
     homePage()
 
-
+    // window.scroll({
+    //     top: 0,
+    //     behavior: 'smooth'
+    //   });
 }
 
 function homePage() {
@@ -92,6 +98,12 @@ function searchPage() {
     categoriesPreviewSection.classList.add('inactive');
     genericSection.classList.remove('inactive');
     movieDetailSection.classList.add('inactive');
+
+    const [searc, query] = location.hash.split('=');
+    const busqueda = decodeURIComponent(query);
+    console.log(busqueda);
+    headerCategoryTitle.innerHTML= `Resultados: ${busqueda}`
+    getMoviesBySearch(busqueda);
 }
 function trendsPage() {
     console.log('in TRENDS!!!');
