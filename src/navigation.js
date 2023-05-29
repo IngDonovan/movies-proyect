@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', navigator, false);
 window.addEventListener('hashchange', navigator, true)
 
 function navigator() {
-    console.log({ location });
+    //console.log({ location });
     const locHash = location.hash;
 
     locHash.startsWith('#trends')? trendsPage():

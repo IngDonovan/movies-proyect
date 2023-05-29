@@ -20,6 +20,18 @@ const api = axios.create({
 
 const buildMovieImageUrl = (posterPath) => `https://image.tmdb.org/t/p/w300/${posterPath}`;
 
+function createMovies(movies, container) {
+  container.innerHTML = '';
+
+  movies.forEach(movie => {
+    container.insertAdjacentHTML('beforeend', `
+      <div class='movie-container'>
+        <img src='${buildMovieImageUrl(movie.poster_path)}' class='movie-img' alt='${movie.title}' />
+      </div>
+    `)
+});
+}
+
 async function getTrendingMoviesPreview() {
   try {
       const {data} = await api(trending);
@@ -27,16 +39,16 @@ async function getTrendingMoviesPreview() {
       const movies = data.results;
       //console.log({data, movies});
       
-      // const trendingMoviesPreviewList = document.querySelector('#trendingPreview .trendingPreview-movieList');
-      trendingMoviesPreviewList.innerHTML = '';
+      createMovies(movies, trendingMoviesPreviewList);
+      // trendingMoviesPreviewList.innerHTML = '';
       
-      movies.forEach(movie => {
-          trendingMoviesPreviewList.insertAdjacentHTML('beforeend', `
-            <div class='movie-container'>
-              <img src='${buildMovieImageUrl(movie.poster_path)}' class='movie-img' alt='${movie.title}' />
-            </div>
-          `)
-      });
+      // movies.forEach(movie => {
+      //     trendingMoviesPreviewList.insertAdjacentHTML('beforeend', `
+      //       <div class='movie-container'>
+      //         <img src='${buildMovieImageUrl(movie.poster_path)}' class='movie-img' alt='${movie.title}' />
+      //       </div>
+      //     `)
+      // });
       
 
   } catch (error) {
@@ -82,19 +94,18 @@ async function getMoviesByCategory(id) {
           with_genres: id,
         },
       });
-
       const movies = data.results;
-      //console.log({data, movies});
-    
-      genericSection.innerHTML = '';
+
+      createMovies(movies, genericSection);
+      // genericSection.innerHTML = '';
       
-      movies.forEach(movie => {
-        genericSection.insertAdjacentHTML('beforeend', `
-            <div class='movie-container'>
-              <img src='${buildMovieImageUrl(movie.poster_path)}' class='movie-img' alt='${movie.title}' />
-            </div>
-          `)
-      });
+      // movies.forEach(movie => {
+      //   genericSection.insertAdjacentHTML('beforeend', `
+      //       <div class='movie-container'>
+      //         <img src='${buildMovieImageUrl(movie.poster_path)}' class='movie-img' alt='${movie.title}' />
+      //       </div>
+      //     `)
+      // });
       
 
   } catch (error) {
