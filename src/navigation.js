@@ -1,14 +1,17 @@
-// const locHash = location.hash;
-
-arrowBtn.addEventListener('click', () => window.history.back());
-trendingBtn.addEventListener('click', () => location.hash = 'trends');
 
 searchFormBtn.addEventListener('click', () => {
     location.hash = `search=${searchFormInput.value}`
 });
+trendingBtn.addEventListener('click', () => location.hash = 'trends');
+arrowBtn.addEventListener('click', () => {
+    console.log('click back');
+    history.back();
+    // history.go(-1);
+  });
+
 
 window.addEventListener('DOMContentLoaded', navigator, false);
-window.addEventListener('hashchange', navigator, true)
+window.addEventListener('hashchange', navigator, false)
 
 function navigator() {
     //console.log({ location });
@@ -25,7 +28,6 @@ function navigator() {
     //     behavior: 'smooth'
     //   });
 }
-
 function homePage() {
     console.log('Home!!');
 
