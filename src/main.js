@@ -5,6 +5,7 @@ const idiom = 'es-ES'
 const urlenguage = `&language=${idiom}`;
 const urlCategories = 'genre/movie/list';
 
+
 const api = axios.create({
   baseURL: url,
   headers: {
@@ -46,8 +47,6 @@ async function getCategoriesPreview() {
 
       const categories = data.genres;
       // console.log({data, categories});
-
-      // const categoriesPreviewList = document.querySelector('#categoriesPreview .categoriesPreview-list');
       categoriesPreviewList.innerHTML = '';
       
       categories.forEach(category => {
@@ -56,9 +55,22 @@ async function getCategoriesPreview() {
             <div class="category-container">
               <h3 id="id${category.id}" class="category-title">${category.name}</h3>
             </div>
-          `)
+          `);
       });
-      
+      // Agregar event listener al contenedor
+      categoriesPreviewList.addEventListener('click', (event) => {
+        const clickedElement = event.target;
+
+      // Verificar si el elemento clicado es un h3 con la clase 'category-title'
+        if (clickedElement.classList.contains('category-title')) {
+          const categoryId = clickedElement.getAttribute('id').substring(2);
+          const categoryName = clickedElement.textContent;
+          const hash = `#category=${categoryId}-${categoryName}`;
+
+          location.hash = hash;
+      }
+    });
+        
   } catch (error) {
       console.log('Ocurrió un error: ', error);
   }
