@@ -154,3 +154,17 @@ async function getMoviesBySearch(query) {
       console.log('Ocurrió un error: ', error);
   }
 }
+
+async function getTrendingMovies() {
+  try {
+      const {data} = await api(trending);
+
+      const movies = data.results;
+
+      
+      createMovies(movies, genericSection);
+
+  } catch (error) {
+      console.log('Ocurrió un error: ', error);
+  }
+}

@@ -1,12 +1,17 @@
 
 searchFormBtn.addEventListener('click', () => {
     location.hash = `search=${searchFormInput.value}`
+    //console.log({'busqueda': anterior});
+    
 });
 trendingBtn.addEventListener('click', () => location.hash = 'trends');
 arrowBtn.addEventListener('click', () => {
-    console.log('click back');
-    history.back();
-    // history.go(-1);
+    //console.log({'dentro arrow': anterior});
+    if (window.history.length <= 2) {
+        location.hash = '';
+        return
+    }
+        history.back();
   });
 
 
@@ -103,7 +108,7 @@ function searchPage() {
 
     const [searc, query] = location.hash.split('=');
     const busqueda = decodeURIComponent(query);
-    console.log(busqueda);
+    //console.log(busqueda);
     headerCategoryTitle.innerHTML= `Resultados: ${busqueda}`
     getMoviesBySearch(busqueda);
 }
@@ -122,4 +127,7 @@ function trendsPage() {
     categoriesPreviewSection.classList.add('inactive');
     genericSection.classList.remove('inactive');
     movieDetailSection.classList.add('inactive');
+
+    headerCategoryTitle.innerHTML= 'Tendencias';
+    getTrendingMovies();
 }
