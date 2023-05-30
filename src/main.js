@@ -25,13 +25,21 @@ function createMovies(movies, container) {
   container.innerHTML = '';
 
   movies.forEach(movie => {
-    container.insertAdjacentHTML('beforeend', `
-      <div class='movie-container'>
-        <img src='${buildMovieImageUrl(movie.poster_path)}' class='movie-img' alt='${movie.title}' />
-      </div>
-    `)
-});
+    const movieContainer = document.createElement('div');
+    movieContainer.classList.add('movie-container');
+
+    movieContainer.innerHTML = `
+      <img src='${buildMovieImageUrl(movie.poster_path)}' class='movie-img' alt='${movie.title}' />
+    `;
+    container.appendChild(movieContainer);
+
+    movieContainer.addEventListener('click', () => {
+      location.hash = `#movie=${movie.id}`;
+    });
+  });
+  //En lugar de adjuntar el event listener al contenedor principal, container, ahora se agrega al contenedor de cada película individual, movieContainer. Esto asegurará que el evento solo se active cuando se hace clic en una película específica.
 };
+
 function createCategories(categories, container) {
   container.innerHTML = '';
       
