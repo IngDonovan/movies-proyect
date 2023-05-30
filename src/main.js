@@ -6,6 +6,7 @@ const urlenguage = `&language=${idiom}`;
 const urlCategories = 'genre/movie/list';
 const urlMoviesCat = 'discover/movie';
 const urlSearch = 'search/movie';
+const urlMovieId = 'movie/';
 
 
 const api = axios.create({
@@ -176,3 +177,28 @@ async function getTrendingMovies() {
       console.log('Ocurrió un error: ', error);
   }
 }
+async function getMovieById(id) {
+  try {
+      const {data : movie} = await api(urlMovieId+id);
+
+      const movieImgUrl = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+      headerSection.style.background = `
+      linear-gradient(
+        180deg, 
+        rgba(0, 0, 0, 0.35) 19.27%, 
+        rgba(0, 0, 0, 0) 29.17%
+        ),
+        url(${movieImgUrl})
+        `;
+
+      movieDetailTitle.textContent = movie.title;
+      movieDetailDescription.textContent = movie.overview;
+      movieDetailScore.textContent = movie.vote_average.toFixed(1);
+    
+      createCategories(movie.genres, movieDetailCategoriesList)
+
+  } catch (error) {
+      console.log('Ocurrió un error: ', error);
+  }
+}
+

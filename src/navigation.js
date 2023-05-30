@@ -89,6 +89,10 @@ function movieDetailsPage() {
     categoriesPreviewSection.classList.add('inactive');
     genericSection.classList.add('inactive');
     movieDetailSection.classList.remove('inactive');
+
+    const [mov, movieID] = location.hash.split('=');
+    //headerCategoryTitle.innerHTML= `Resultados: ${busqueda}`;
+    getMovieById(movieID);
 }
 function searchPage() {
     console.log('in SEARCH!!!');
@@ -109,7 +113,7 @@ function searchPage() {
     const [searc, query] = location.hash.split('=');
     const busqueda = decodeURIComponent(query);
     //console.log(busqueda);
-    headerCategoryTitle.innerHTML= `Resultados: ${busqueda}`
+    headerCategoryTitle.innerHTML= `Resultados: ${busqueda}`;
     getMoviesBySearch(busqueda);
 }
 function trendsPage() {
