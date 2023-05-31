@@ -195,10 +195,23 @@ async function getMovieById(id) {
       movieDetailDescription.textContent = movie.overview;
       movieDetailScore.textContent = movie.vote_average.toFixed(1);
     
-      createCategories(movie.genres, movieDetailCategoriesList)
+      createCategories(movie.genres, movieDetailCategoriesList);
+
+      getSimilarMoviesId(id);
 
   } catch (error) {
       console.log('Ocurrió un error: ', error);
   }
 }
 
+async function getSimilarMoviesId(id) {
+  try {
+    const {data} = await api(`movie/${id}/similar`);
+    const similarMovies = data.results;
+
+    createMovies(similarMovies, relatedMoviesContainer)
+
+  } catch (error) {
+    console.log('Ocurrió un error: ', error);
+  }
+}
